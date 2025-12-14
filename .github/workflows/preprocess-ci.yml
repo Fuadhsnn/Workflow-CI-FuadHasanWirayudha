@@ -1,14 +1,11 @@
-name: Preprocess Dataset
+name: MLflow CI Training
 
 on:
   push:
-    paths:
-      - "preprocessing/**"
-      - ".github/workflows/preprocess_ci.yml"
   workflow_dispatch:
 
 jobs:
-  preprocessing:
+  train-model:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,14 +19,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas seaborn matplotlib scikit-learn joblib
+          pip install mlflow scikit-learn pandas numpy matplotlib seaborn joblib optuna dagshub
 
-      - name: Run preprocessing script
+      - name: Set DagsHub credentials
         run: |
-          python preprocessing/automate_FuadHasanWirayudha.py
+          echo "MLFLOW_TRACKING_USERNAME=Fuadhsnn" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_PASSWORD=${{ secrets.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Upload cleaned dataset artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: cleaned-pima-dataset
-          path: cleaned_pima_diabetes_fuad.csv
+      - name: Run MLflow Project
+        run: |
+          mlflow run MLProject --env-manager=local
