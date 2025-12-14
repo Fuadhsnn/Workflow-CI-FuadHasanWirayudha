@@ -1,0 +1,16 @@
+name: sml-env
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - pandas
+      - numpy
+      - scikit-learn
+      - matplotlib
+      - seaborn
+      - joblib
+      - mlflow
+      - optuna
+      - dagshub
