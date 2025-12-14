@@ -21,6 +21,11 @@ jobs:
         run: |
           pip install mlflow scikit-learn pandas numpy matplotlib seaborn joblib optuna dagshub
 
+      - name: Set DagsHub credentials
+        run: |
+          echo "MLFLOW_TRACKING_USERNAME=Fuadhsnn" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_PASSWORD=${{ secrets.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
+
       - name: Run MLflow Project
         run: |
           mlflow run MLProject --env-manager=local
