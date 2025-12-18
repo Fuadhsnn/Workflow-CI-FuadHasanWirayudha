@@ -1,4 +1,4 @@
-name: diabetes_prediction_fuad
+name: diabetes-ci
 
 conda_env: conda.yaml
 
